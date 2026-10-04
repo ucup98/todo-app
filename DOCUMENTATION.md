@@ -173,7 +173,7 @@ VITE_API_URL=https://todo-app-production-xxxx.up.railway.app
 | DATABASE_URL | *otomatis dari Railway PostgreSQL* |
 | JWT_SECRET | *random string panjang* |
 | JWT_EXPIRES_IN | 7d |
-| FRONTEND_URL | https://focused-bravery-production-614a.up.railway.app |
+| FRONTEND_URL | https://focused-bravery-production-ae43.up.railway.app |
 
 ---
 
@@ -389,7 +389,7 @@ git push -u origin main
 **Solusi:**
 - Hapus kode serve static frontend dari `backend/src/index.js` (frontend sudah di-serve terpisah)
 - Pastikan `VITE_API_URL` di frontend diisi dengan format lengkap: `https://todo-app-production-xxxx.up.railway.app`
-- Pastikan `FRONTEND_URL` di backend diisi dengan format lengkap: `https://focused-bravery-production-614a.up.railway.app`
+- Pastikan `FRONTEND_URL` di backend diisi dengan format lengkap: `https://focused-bravery-production-ae43.up.railway.app`
 - Ganti CORS middleware ke manual headers untuk memastikan header selalu dikirim di setiap response
 
 ---
@@ -407,6 +407,6 @@ git push -u origin main
 
 | Service | URL |
 |---------|-----|
-| Frontend | https://focused-bravery-production-614a.up.railway.app |
+| Frontend | https://focused-bravery-production-ae43.up.railway.app |
 | Backend API | https://todo-app-production-438d.up.railway.app |
 | GitHub Repo | https://github.com/ucup98/todo-app |

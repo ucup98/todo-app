@@ -25,7 +25,11 @@ export default function Register() {
       toast.success('Registrasi berhasil!')
       navigate('/todos')
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Registrasi gagal.')
+      console.error('Register error:', err)
+      const msg = err.response?.data?.message
+        || err.message
+        || 'Registrasi gagal.'
+      toast.error(msg)
     } finally {
       setLoading(false)
     }

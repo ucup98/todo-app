@@ -1,0 +1,9 @@
+node_modules/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.env
+.env.local
+dist/
+.DS_Store
+Thumbs.db

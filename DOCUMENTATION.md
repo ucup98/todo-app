@@ -403,6 +403,36 @@ git push -u origin main
 
 ---
 
+### Issue #11 — Tanggal due_date tampil sebagai ISO string (2026-10-31T00:00:00.000Z)
+**Masalah:** Tanggal tenggat waktu di TodoCard tampil dalam format ISO lengkap `2026-10-31T00:00:00.000Z` alih-alih format rapi `2026-10-31`.
+
+**Root Cause:** PostgreSQL mengembalikan kolom `DATE` sebagai objek JavaScript Date yang saat di-render langsung menghasilkan ISO string. Masalah yang sama terjadi di TodoModal saat mengisi form edit.
+
+**Solusi:** Tambahkan `.toString().slice(0, 10)` saat menggunakan nilai `due_date` di komponen:
+```js
+// TodoCard.jsx & TodoModal.jsx
+const formattedDueDate = todo.due_date
+  ? todo.due_date.toString().slice(0, 10)
+  : null
+```
+
+---
+
+### Issue #12 — Service `focused-bravery` tidak auto-deploy setelah push ke GitHub
+**Masalah:** Setelah push commit baru, service frontend di Railway tidak otomatis redeploy. Semua deployment di history menunjukkan commit lama.
+
+**Root Cause:** Dua penyebab:
+1. Koneksi GitHub ke Railway terputus — muncul error "Could not load branches"
+2. **Auto deploy** dalam kondisi **disabled** di Settings service
+
+**Solusi:**
+1. Buka Railway → service `focused-bravery` → tab **Settings** → bagian **Source**
+2. Klik **Disconnect** lalu reconnect repo `ucup98/todo-app`
+3. Klik **Enable** di bagian "Auto deploy is disabled"
+4. Push commit baru ke GitHub — Railway akan otomatis detect dan deploy
+
+---
+
 ## 9. URL Production
 
 | Service | URL |

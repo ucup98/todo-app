@@ -23,10 +23,15 @@ const PRIORITY_LABELS = {
 }
 
 export default function TodoCard({ todo, onEdit, onDelete }) {
+  // Format due_date: ambil hanya bagian tanggal (YYYY-MM-DD)
+  const formattedDueDate = todo.due_date
+    ? todo.due_date.toString().slice(0, 10)
+    : null
+
   const isOverdue =
-    todo.due_date &&
+    formattedDueDate &&
     todo.status !== 'completed' &&
-    new Date(todo.due_date) < new Date()
+    new Date(formattedDueDate) < new Date()
 
   return (
     <div className={`bg-white rounded-xl border p-4 shadow-sm hover:shadow-md transition group ${isOverdue ? 'border-red-200' : 'border-gray-200'}`}>
@@ -68,12 +73,12 @@ export default function TodoCard({ todo, onEdit, onDelete }) {
         <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${PRIORITY_STYLES[todo.priority]}`}>
           {PRIORITY_LABELS[todo.priority]}
         </span>
-        {todo.due_date && (
+        {formattedDueDate && (
           <span className={`text-xs flex items-center gap-1 ${isOverdue ? 'text-red-500 font-medium' : 'text-gray-400'}`}>
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            {isOverdue ? 'Terlambat: ' : ''}{todo.due_date}
+            {isOverdue ? 'Terlambat: ' : ''}{formattedDueDate}
           </span>
         )}
       </div>

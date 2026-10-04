@@ -379,9 +379,27 @@ git push -u origin main
 ---
 
 ### Issue #9 — CORS error antara frontend dan backend production
-**Masalah:** Saat frontend coba hit API backend, request diblokir CORS.
+**Masalah:** Saat frontend coba hit API backend, request diblokir CORS dengan response headers kosong.
 
-**Solusi:** Set `FRONTEND_URL` di environment variable backend dengan URL frontend yang benar. Sementara sebelum URL frontend diketahui, gunakan `*` sebagai nilai sementara.
+**Root Cause:** Beberapa penyebab yang ditemukan secara bertahap:
+1. `VITE_API_URL` di frontend tidak ada `https://` di depannya
+2. Backend melakukan serve static frontend files (`frontend/dist`) yang tidak ada di service backend Railway, menyebabkan error 500 pada semua request
+3. `FRONTEND_URL` di backend tidak ada `https://` di depannya sehingga CORS header dikirim dengan origin yang salah
+
+**Solusi:**
+- Hapus kode serve static frontend dari `backend/src/index.js` (frontend sudah di-serve terpisah)
+- Pastikan `VITE_API_URL` di frontend diisi dengan format lengkap: `https://todo-app-production-xxxx.up.railway.app`
+- Pastikan `FRONTEND_URL` di backend diisi dengan format lengkap: `https://focused-bravery-production-614a.up.railway.app`
+- Ganti CORS middleware ke manual headers untuk memastikan header selalu dikirim di setiap response
+
+---
+
+### Issue #10 — Service `todo-app` tidak auto-deploy commit terbaru
+**Masalah:** Commit-commit terbaru tidak ter-deploy ke service `todo-app` di Railway meskipun sudah di-push ke GitHub.
+
+**Root Cause:** Railway tidak mendeteksi perubahan di folder `backend/` secara otomatis untuk service tersebut.
+
+**Solusi:** Lakukan redeploy manual di Railway — klik titik tiga `...` di deployment Active → **Redeploy**.
 
 ---
 

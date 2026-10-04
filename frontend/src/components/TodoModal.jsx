@@ -16,7 +16,7 @@ export default function TodoModal({ isOpen, onClose, onSubmit, initialData }) {
         description: initialData.description || '',
         priority: initialData.priority || 'medium',
         status: initialData.status || 'pending',
-        due_date: initialData.due_date || '',
+        due_date: initialData.due_date ? initialData.due_date.toString().slice(0, 10) : '',
       })
     } else {
       setForm({ title: '', description: '', priority: 'medium', status: 'pending', due_date: '' })

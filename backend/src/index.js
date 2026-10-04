@@ -32,14 +32,6 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Todo API is running.' });
 });
 
-// Serve frontend static files di production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../frontend/dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'));
-  });
-}
-
 // 404
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found.' });
